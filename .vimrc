@@ -70,8 +70,7 @@ else
 endif
 let g:deoplete#enable_at_startup = 1
 Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
-Plug 'carlitux/deoplete-ternjs'
-
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 if isdirectory('/usr/local/opt/fzf')
     Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 else
@@ -560,3 +559,8 @@ colorscheme base16-default-dark
 
 "Gitgutter option
 let g:gitgutter_override_sign_column_highlight = 0
+
+"Use Tab for everything (except for UltiSnips)!
+autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+let g:UltiSnipsExpandTrigger="<C-j>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
