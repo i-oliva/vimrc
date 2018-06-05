@@ -106,6 +106,9 @@ Plug 'scrooloose/nerdcommenterv'
 
 "Emmet
 Plug 'mattn/emmet-vim'
+
+"Cosco.vim
+Plug 'lfilho/cosco.vim'
 "*****************************************************************************
 "" Custom bundles
 "*****************************************************************************
@@ -564,3 +567,7 @@ let g:gitgutter_override_sign_column_highlight = 0
 autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 let g:UltiSnipsExpandTrigger="<C-j>"
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+"Cosco config
+autocmd FileType javascript,css,typescript nmap <silent> <Leader>; <Plug>(cosco-commaOrSemiColon)
+autocmd FileType javascript,css,typescript imap <silent> <Leader>; <c-o><Plug>(cosco-commaOrSemiColon)
