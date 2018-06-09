@@ -45,14 +45,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
-Plug 'vim-scripts/grep.vim'
-Plug 'vim-scripts/CSApprox'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
 Plug 'Yggdroot/indentLine'
 Plug 'avelino/vim-bootstrap-updater'
-Plug 'sheerun/vim-polyglot'
 Plug 'luochen1990/rainbow'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
@@ -61,13 +58,9 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-endif
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'vim-scripts/grep.vim'
+
 let g:deoplete#enable_at_startup = 1
 Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
@@ -93,16 +86,14 @@ endif
 
 if v:version >= 704
     "" Snippets
+    Plug 'honza/vim-snippets'
+    Plug 'Chiel92/vim-autoformat'
+
 endif
 
-Plug 'honza/vim-snippets'
-Plug 'Chiel92/vim-autoformat'
 
 "Surround
 Plug 'tpope/vim-surround'
-
-"Commenter
-Plug 'scrooloose/nerdcommenterv'
 
 "Emmet
 Plug 'mattn/emmet-vim'
@@ -115,12 +106,17 @@ Plug 'lfilho/cosco.vim'
 
 " javascript
 "" Javascript Bundle
-Plug 'jelera/vim-javascript-syntax'
-Plug 'pangloss/vim-javascript'
 Plug 'othree/yajs.vim'
+Plug 'pangloss/vim-javascript'
 
 "Syntax checker
 Plug 'w0rp/ale'
+
+"Solarized
+Plug 'iCyMind/NeoSolarized'
+
+"LinkTrace
+Plug 'gerw/vim-HiLinkTrace'
 
 "*****************************************************************************
 "*****************************************************************************
@@ -134,6 +130,7 @@ call plug#end()
 
 " Required:
 filetype plugin indent on
+syntax enable
 
 
 "*****************************************************************************
@@ -271,7 +268,7 @@ cnoreabbrev Qall qall
 let g:NERDTreeChDirMode=2
 let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
 let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
-let g:NERDTreeShowBookmarks=1
+let g:NERDTreeShowBookmarks=0
 let g:nerdtree_tabs_focus_on_files=1
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 let g:NERDTreeWinSize = 30
@@ -310,25 +307,25 @@ endif
 "*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
-"" The PC is fast enough, do syntax highlight syncing from start unless 200 lines
+" The PC is fast enough, do syntax highlight syncing from start unless 200 lines
 augroup vimrc-sync-fromstart
     autocmd!
     autocmd BufEnter * :syntax sync maxlines=200
 augroup END
 
-"" Remember cursor position
+" Remember cursor position
 augroup vimrc-remember-cursor-position
     autocmd!
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
-"" txt
+" txt
 augroup vimrc-wrapping
     autocmd!
     autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
 augroup END
 
-"" make/cmake
+" make/cmake
 augroup vimrc-make-cmake
     autocmd!
     autocmd FileType make setlocal noexpandtab
@@ -558,7 +555,7 @@ au BufWrite * :Autoformat
 
 "Color
 
-colorscheme base16-default-dark
+colorscheme NeoSolarized
 
 "Gitgutter option
 let g:gitgutter_override_sign_column_highlight = 0
@@ -571,3 +568,13 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 "Cosco config
 autocmd FileType javascript,css,typescript nmap <silent> <Leader>; <Plug>(cosco-commaOrSemiColon)
 autocmd FileType javascript,css,typescript imap <silent> <Leader>; <c-o><Plug>(cosco-commaOrSemiColon)
+
+"Disable highlighting until next search
+nnoremap <CR> :noh<CR><CR>
+
+"TernJS config
+let g:deoplete#sources#ternjs#types = 1
+
+"Ctrl + s to save
+inoremap <C-s> <esc>:w<cr>                 " save files
+noremap <C-s> :w<cr>
