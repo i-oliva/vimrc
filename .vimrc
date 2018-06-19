@@ -553,8 +553,6 @@ au BufWrite * :Autoformat
 :  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 :augroup END
 
-"Color
-
 colorscheme NeoSolarized
 
 "Gitgutter option
